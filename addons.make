@@ -1,0 +1,4 @@
+ofxXmlSettings
+ofxCanonEOS
+ofxMSAInteractiveObject
+ofxSimpleGuiToo

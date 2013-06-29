@@ -1,0 +1,10 @@
+.DS_Store
+xcuserdata
+bin/devineClassOf2016.app
+bin/devineClassOf2016Debug.app
+bin/data/fbsettings.xml
+bin/data/finished
+bin/data/progress
+bin/data/to-convert
+bin/data/*.jpeg
+bin/data/*.jpg
