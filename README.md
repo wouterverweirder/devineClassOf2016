@@ -2,6 +2,8 @@
 
 Openframeworks greenkey app, used on the info-days of [the Devine program](http://www.devine.be) I teach in.
 
+![output example](https://raw.github.com/wouterverweirder/devineClassOf2016/master/polaroid-example.jpg)
+
 1. A picture is taken with an attached Canon camera
 2. The picture is keyed with after effects
 3. The keyed image is merged with a background image
