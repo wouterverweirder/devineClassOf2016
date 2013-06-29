@@ -31,7 +31,7 @@ The following libraries were linked:
 
 ## Copyright and license
 
-Copyright © 2013 Wouter Verweirder
+Copyright © 2013 Devine, Howest
 
 Author: Wouter Verweirder
 
