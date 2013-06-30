@@ -37,6 +37,9 @@ public:
         state = SETUP_FOLDERS;
         startThread(false, false);
     }
+    
+    ofEvent<string> onConversionComplete;
+    
 private:
     CONVERSION_STATE state;
     string _appDir;
@@ -44,7 +47,6 @@ private:
     string _facebookAccessToken;
     string _facebookAlbumId;
     void threadedFunction(){
-        printf("ConversionCommand::threadedFunction() %i\n", state);
         while(isThreadRunning()) {
             if(state == SETUP_FOLDERS) {
                 setupFolders();
@@ -67,7 +69,6 @@ private:
             }
             ofSleepMillis(100);
         }
-        printf("thread complete\n");
     }
     
     SysCommand cmd;
@@ -101,7 +102,6 @@ private:
         string command = "/Applications/Adobe\\ After\\ Effects\\ CC/aerender -project '" + projectFile + "' -comp \"polaroid\" -RStemplate \"Best Settings\" -OMtemplate \"keying\" -output '" + outputFile + "'";
         
         string result = cmd.exec((char *)command.c_str());
-        cout << result << endl;
         ofFile(ofToDataPath(progressFolderPath + "keying_progress.png00000")).renameTo(ofToDataPath(progressFolderPath + "keying_finished.png"));
         printf("keyWithAfterEffects done\n");
         state++;
@@ -283,9 +283,14 @@ private:
         string progressFolderPath = "progress/" + sourceImageFile.getBaseName() + "/";
         
         ofFile polaroidFile = ofFile(ofToDataPath(progressFolderPath + "polaroid.jpg"));
-        polaroidFile.moveTo(ofToDataPath("finished/" + ofGetTimestampString() + ".jpg"));
+        
+        string fileName = ofGetTimestampString() + ".jpg";
+        
+        polaroidFile.moveTo(ofToDataPath("finished/" + fileName));
         
         ofDirectory(ofToDataPath(progressFolderPath)).remove(true);
+        
+        ofNotifyEvent(onConversionComplete, fileName);
         
         state++;
     }

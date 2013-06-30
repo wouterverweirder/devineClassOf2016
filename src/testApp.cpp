@@ -43,6 +43,9 @@ void testApp::setup(){
     finishedDirectory = ofDirectory(ofToDataPath("finished/"));
     if(!finishedDirectory.exists()) finishedDirectory.create();
     
+    checkConvertDirectory = false;
+    ofAddListener(conversionCommand.onConversionComplete, this, &testApp::onConversionComplete);
+    
     //webview
     webView.allocate(480, 640, GL_RGBA);
     ofAddListener(webView.beginLoading, this, &testApp::onWebViewBeginLoading);
@@ -85,6 +88,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
                     //use it > place in to-convert directory
                     cameraImageFile.moveTo(ofToDataPath("to-convert/" + cameraImageFile.getFileName()));
                     numFilesToConvert++;
+                    checkConvertDirectory = true;
                 }else{
                     //delete the file
                     cameraImageFile.remove();
@@ -110,6 +114,11 @@ void testApp::onFileAdded(string &fileName){
     }
 }
 
+void testApp::onConversionComplete(string &fileName){
+    cout << "onConversionComplete: " << fileName << endl;
+    checkConvertDirectory = true;
+}
+
 void testApp::cameraImageChanged(){
     if(cameraImages.size() > 0) {
         cameraImage.loadImage(cameraImages.front());
@@ -129,7 +138,8 @@ void testApp::cameraImageChanged(){
 //--------------------------------------------------------------
 void testApp::update(){
     webView.update();
-    if(!conversionCommand.isThreadRunning()) {
+    if(checkConvertDirectory && !conversionCommand.isThreadRunning()) {
+        checkConvertDirectory = false;
         //check to-convert directory
         toConvertDirectory.close();
         toConvertDirectory.open(ofToDataPath("to-convert/"));

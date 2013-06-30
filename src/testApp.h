@@ -46,6 +46,7 @@ public:
     
     // CONVERSION
     ConversionCommand conversionCommand;
+    void onConversionComplete(string& fileName);
     // END CONVERSION
     
     // DIRECTORIES
@@ -53,6 +54,7 @@ public:
     ofDirectory progressDirectory;
     ofDirectory finishedDirectory;
     int numFilesToConvert;
+    bool checkConvertDirectory;
     // END DIRECTORIES
 		
 };
