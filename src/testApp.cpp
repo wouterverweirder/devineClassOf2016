@@ -56,6 +56,7 @@ void testApp::setup(){
     //end webview
     
     ofAddListener(wrapper.onFileAdded, this, &testApp::onFileAdded);
+    cameraImageChanged();
 }
 
 void testApp::onWebViewBeginLoading(const WebViewBeginLoadingEvent& event){
@@ -70,7 +71,7 @@ void testApp::guiEvent(ofxUIEventArgs &e)
 {
 	string name = e.widget->getName();
     
-    if("mousePressed" == e.type) {
+    if("mouseReleased" == e.type) {
         if("TAKE PICTURE" == name){
             if(!wrapper.isStarted()){
                 wrapper.start(); //restart if camera was disconnected
@@ -112,8 +113,16 @@ void testApp::onFileAdded(string &fileName){
 void testApp::cameraImageChanged(){
     if(cameraImages.size() > 0) {
         cameraImage.loadImage(cameraImages.front());
+        removePictureButton->setVisible(true);
+        removePictureButton->setLabelVisible(true);
+        usePictureButton->setVisible(true);
+        usePictureButton->setLabelVisible(true);
     } else {
         cameraImage.clear();
+        removePictureButton->setVisible(false);
+        removePictureButton->setLabelVisible(false);
+        usePictureButton->setVisible(false);
+        usePictureButton->setLabelVisible(false);
     }
 }
 
