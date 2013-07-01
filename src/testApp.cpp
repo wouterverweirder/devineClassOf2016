@@ -10,13 +10,18 @@ void testApp::setup(){
     for(int i = 0; i < 3; i++) {
         appDir = ofFilePath::getEnclosingDirectory(appDir);
     }
-    cout << appDir << endl;
     
     appSettings.loadFile("fbsettings.xml");
     facebookAlbumId = appSettings.getValue("FACEBOOK:ALBUMID", FACEBOOK_ALBUM_ID); //prive album
     facebookAccessToken = appSettings.getValue("FACEBOOK:ACCESSTOKEN", "");
     
+    ofxFenster* win=ofxFensterManager::get()->createFenster(400, 300, 640, 480, OF_WINDOW);
+    win->addListener(&resultWindow);
+    win->setWindowTitle("Result");
+    resultWindow.setup();
+    
     gui = new ofxUICanvas();
+    gui->setAutoDraw(false);
     gui->setDrawBack(false);
     gui->addSpacer(0.0, 5.0);
     takePictureButton = new ofxUILabelButton("TAKE PICTURE", false, 200, 40);
@@ -117,6 +122,7 @@ void testApp::onFileAdded(string &fileName){
 void testApp::onConversionComplete(string &fileName){
     cout << "onConversionComplete: " << fileName << endl;
     checkConvertDirectory = true;
+    resultWindow.showImage(fileName);
 }
 
 void testApp::cameraImageChanged(){
@@ -157,6 +163,7 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
     ofBackground(0);
+    gui->draw();
     webView.draw();
     if(cameraImage.isAllocated()){
         ofPushMatrix();

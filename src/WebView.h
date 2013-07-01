@@ -85,7 +85,13 @@ public:
                 case OF_KEY_END:
                     injectKey(Awesomium::KeyCodes::AK_END);
                     return;
+                case OF_KEY_SHIFT:
+                case 256:
+                    injectKey(Awesomium::KeyCodes::AK_SHIFT);
+                    return;
             }
+            
+            std::cout << "key: " << args.key << std::endl;
             
             Awesomium::WebKeyboardEvent keyEvent;
             keyEvent.text[0] = args.key;

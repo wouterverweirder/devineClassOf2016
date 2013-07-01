@@ -19,6 +19,7 @@ The app was built with openframeworks version 0.7.4, on OSX. The following addon
 * ofxXmlSettings
 * [ofxCanonEOS](https://github.com/wouterverweirder/ofxCanon)
 * [my fork of ofxUI](https://github.com/wouterverweirder/ofxUI)
+* [ofxFenster](https://github.com/underdoeg/ofxFenster/)
 
 Make sure you have the addons & their requirements.
 

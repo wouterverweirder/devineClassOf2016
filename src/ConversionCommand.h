@@ -46,6 +46,7 @@ private:
     string _sourceImage;
     string _facebookAccessToken;
     string _facebookAlbumId;
+    string _resultFileName;
     void threadedFunction(){
         while(isThreadRunning()) {
             if(state == SETUP_FOLDERS) {
@@ -69,6 +70,7 @@ private:
             }
             ofSleepMillis(100);
         }
+        ofNotifyEvent(onConversionComplete, _resultFileName);
     }
     
     SysCommand cmd;
@@ -284,13 +286,13 @@ private:
         
         ofFile polaroidFile = ofFile(ofToDataPath(progressFolderPath + "polaroid.jpg"));
         
-        string fileName = ofGetTimestampString() + ".jpg";
+        string fileName = "finished/" + ofGetTimestampString() + ".jpg";
         
-        polaroidFile.moveTo(ofToDataPath("finished/" + fileName));
+        polaroidFile.moveTo(ofToDataPath(fileName));
         
         ofDirectory(ofToDataPath(progressFolderPath)).remove(true);
         
-        ofNotifyEvent(onConversionComplete, fileName);
+        _resultFileName = fileName;
         
         state++;
     }

@@ -7,8 +7,10 @@
 #include "CanonSDKWrapper.h"
 #include "ConversionCommand.h"
 #include <deque>
+#include "ofxFensterManager.h"
+#include "ResultWindow.h"
 
-class testApp : public ofBaseApp{
+class testApp : public ofxFensterListener{
 
 public:
 	void setup();
@@ -19,6 +21,8 @@ public:
     void windowResized(int w, int h);
     
     string appDir;
+    
+    ResultWindow resultWindow;
     
     // WEBVIEW FOR FACEBOOK LOGIN
     WebView webView;
