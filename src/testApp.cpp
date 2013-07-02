@@ -15,9 +15,15 @@ void testApp::setup(){
     facebookAlbumId = appSettings.getValue("FACEBOOK:ALBUMID", FACEBOOK_ALBUM_ID); //prive album
     facebookAccessToken = appSettings.getValue("FACEBOOK:ACCESSTOKEN", "");
     
+    ofxDisplayList displays = ofxDisplayManager::get()->getDisplays();
+    if(displays.size() > 1){
+        ofxFensterManager::get()->setActiveDisplay(displays[1]);
+    }
+    
     ofxFenster* win=ofxFensterManager::get()->createFenster(400, 300, 640, 480, OF_WINDOW);
     win->addListener(&resultWindow);
     win->setWindowTitle("Result");
+    win->setFullscreen(true);
     resultWindow.setup();
     
     gui = new ofxUICanvas();
